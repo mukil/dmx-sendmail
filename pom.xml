@@ -1,0 +1,48 @@
+<project xmlns:pom="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>DeepaMehta 4 Sendgrid</name>
+    <groupId>de.mikromedia</groupId>
+    <artifactId>dm48-sendgrid</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <parent>
+        <groupId>de.deepamehta</groupId>
+        <artifactId>deepamehta-plugin</artifactId>
+        <version>4.8.2</version>
+    </parent>
+
+    <properties>
+        <dm4.deploy.dir>/home/malted/Desktop/Testing/sign-up release/deepamehta-4.8.4/bundle-deploy</dm4.deploy.dir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>
+                            de.mikromedia.sendgrid
+                        </Bundle-SymbolicName>
+                        <Bundle-Activator>
+                            de.mikromedia.sendgrid.SendgridPlugin
+                        </Bundle-Activator>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
