@@ -65,13 +65,25 @@ public class SendgridPlugin extends PluginActivator implements SendgridService {
                     +toUsername+"\" or \"" + fromUsername + "\" has not signed-up with an Email Address");
         }
     }
-    
+
+    @Override
+    public void doEmailRecipientAs(String from, String fromName,
+            String subject, String message, String recipientMail) {
+        sendPlainMailFromTo(from, fromName, recipientMail, null, subject, message);
+    }
+
+    @Override
+    public void doEmailRecipient(String subject, String message, String recipientMail) {
+        sendPlainMailTo(recipientMail, subject, message);
+    }
+
     @Override
     public void doEmailSystemMailbox(String subject, String message) {
         sendPlainMailTo(SENDGRID_SYSTEM_MAILBOX, subject, message);
     }
 
-    private void sendPlainMailFromTo(String sender, String senderName, String recipientMailbox, String recipientName, String subject, String textMessage) {
+    private void sendPlainMailFromTo(String sender, String senderName, String recipientMailbox,
+            String recipientName, String subject, String textMessage) {
         try {
             SendgridWebApiV3 mailApi = new SendgridWebApiV3(SENDGRID_API_KEY);
             SendgridMail mail = mailApi.newMailFromTo(sender, senderName, recipientMailbox, recipientName, subject, textMessage);
