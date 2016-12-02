@@ -48,7 +48,7 @@ public class SendgridMail implements JSONEnabled {
     }
     
     public void addPlainTextMessage(String textMessage) throws JSONException {
-        addContent("text/plain", textMessage, mail);
+        addContent("text/html", textMessage, mail);
     }
 
     public void send() {
