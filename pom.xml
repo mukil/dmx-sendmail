@@ -1,7 +1,7 @@
 <project xmlns:pom="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>DeepaMehta 4 Sendgrid</name>
+    <name>Mikromedia DM 4 Sendgrid</name>
     <groupId>de.mikromedia</groupId>
     <artifactId>dm48-sendgrid</artifactId>
     <version>1.0</version>

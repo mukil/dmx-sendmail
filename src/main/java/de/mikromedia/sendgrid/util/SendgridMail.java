@@ -26,6 +26,8 @@ public class SendgridMail implements JSONEnabled {
     
     private static Logger log = Logger.getLogger(SendgridMail.class.getName());
 
+    private final static String DM4_HOST_URL = System.getProperty("dm4.host.url");
+
     private JSONObject mail = null;
     private String apiKey = null;
 
@@ -47,7 +49,7 @@ public class SendgridMail implements JSONEnabled {
         addPersonalizations(recipient, recipientName, type, subject, mail);
     }
     
-    public void addPlainTextMessage(String textMessage) throws JSONException {
+    public void addHTMLTextMessage(String textMessage) throws JSONException {
         addContent("text/html", textMessage, mail);
     }
 
@@ -162,7 +164,9 @@ public class SendgridMail implements JSONEnabled {
     }
  
     private void addHostUrlFooter(JSONObject settings) throws JSONException {
-        addFooterSetting("\n\n---\n" + System.getProperty("dm4.host.url") + "\n", null, settings);
+        String htmlValue = "<br/><br/>---<br/><a href=\""+DM4_HOST_URL+"\">" + DM4_HOST_URL + "</a><br/>";
+        String textValue = "\n\n---\n" + DM4_HOST_URL + "\n";
+        addFooterSetting(textValue, htmlValue, settings);
     }
     
     private void addFooterSetting(String textValue, String htmlValue, JSONObject settings) throws JSONException {
