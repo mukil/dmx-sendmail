@@ -13,9 +13,9 @@
         <version>4.8.2</version>
     </parent>
 
-    <properties>
-        <dm4.deploy.dir>/home/malted/Desktop/Testing/sign-up release/deepamehta-4.8.4/bundle-deploy</dm4.deploy.dir>
-    </properties>
+    <!--properties>
+        <dm4.deploy.dir>/home/malted/source/mikro/deepamehta/bundle-deploy</dm4.deploy.dir>
+    </properties-->
 
     <build>
         <plugins>
@@ -38,8 +38,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
         </plugins>

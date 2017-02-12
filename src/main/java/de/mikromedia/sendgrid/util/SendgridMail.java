@@ -63,9 +63,8 @@ public class SendgridMail implements JSONEnabled {
             if (mail != null) {
                 // See https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html
                 log.info("Sendgrid API Mail Request: " + mail.toString());
-                try (OutputStream output = httpConnection.getOutputStream()) {
-                    output.write(mail.toString().getBytes("UTF-8"));
-                }
+                OutputStream output = httpConnection.getOutputStream();
+                output.write(mail.toString().getBytes("UTF-8"));
                 // Read in potential error response
                 InputStream response = httpConnection.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(response));
