@@ -4,7 +4,7 @@
     <name>DeepaMehta 4 Sendgrid</name>
     <groupId>de.mikromedia</groupId>
     <artifactId>dm48-sendgrid</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>bundle</packaging>
 
     <parent>
