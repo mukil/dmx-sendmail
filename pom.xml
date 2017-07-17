@@ -4,7 +4,7 @@
     <name>Mikromedia DM 4 Sendgrid</name>
     <groupId>de.mikromedia</groupId>
     <artifactId>dm48-sendgrid</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <packaging>bundle</packaging>
 
     <parent>
