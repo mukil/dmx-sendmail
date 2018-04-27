@@ -27,7 +27,7 @@ public class SendgridPlugin extends PluginActivator implements SendgridService {
             loadPluginPropertiesConfig();
             // Test the service and our configuration
             // doEmailSystemMailbox("Sendgrid Plugin Activated", "Hello dear, this is your new email "
-               //     + "sending service.\n\nWe hope you can enjoy the comforts!");
+               // + "sending service.\n\nWe hope you can enjoy the comforts!");
         } catch (IOException ex) {
             Logger.getLogger(SendgridPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }

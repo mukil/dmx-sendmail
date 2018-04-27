@@ -39,14 +39,14 @@ public class SendgridWebApiV3 {
             String subject, String message) throws JSONException {
         SendgridMail sendgridMail = new SendgridMail(this.apiKey, from, fromName);
         sendgridMail.addRecipient(recipient, recipientName, TO, subject);
-        sendgridMail.addPlainTextMessage(message);;
+        sendgridMail.addHTMLTextMessage(message);;
         return sendgridMail;
     }
     
     public SendgridMail newMailTo(String recipient, String subject, String message) throws JSONException {
         SendgridMail sendgridMail = new SendgridMail(this.apiKey, defaultFrom, defaultFromName);
         sendgridMail.addRecipient(recipient, null, TO, subject);
-        sendgridMail.addPlainTextMessage(message);;
+        sendgridMail.addHTMLTextMessage(message);;
         return sendgridMail;
     }
 
