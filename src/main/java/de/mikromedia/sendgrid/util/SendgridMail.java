@@ -61,7 +61,7 @@ public class SendgridMail implements JSONEnabled {
             httpConnection.setDoOutput(true);
             httpConnection.setRequestProperty("Authorization", "Bearer " + apiKey);
             httpConnection.setRequestProperty("Content-Type", "application/json");
-            httpConnection.setRequestProperty("User-Agent", "DeepaMehta 4 Sendgrid Plugin (for Java, OSGi)");
+            httpConnection.setRequestProperty("User-Agent", "DeepaMehta 4 Sendgrid Plugin (Java, OSGi)");
             if (mail != null) {
                 // See https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html
                 log.info("Sendgrid API Mail Request: " + mail.toString());
