@@ -32,7 +32,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private String SMTP_HOST = null; // localhost | ip/hostname  
     private String SMTP_USERNAME = null; // empty | username
     private String SMTP_PASSWORD = null; // empty | password
-    private String SMTP_PORT = null; // empty | port
+    private int SMTP_PORT = -1; // empty | port
     private String SMTP_SECURITY = null; // empty | tls | smtps
     // Sendgrid API Configuration
     private String SENDGRID_API_KEY = null; // empty
@@ -63,7 +63,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         SMTP_HOST = pluginProperties.getProperty("dmx.sendmail.smtp_host");
         SMTP_USERNAME = pluginProperties.getProperty("dmx.sendmail.smtp_username");
         SMTP_PASSWORD = pluginProperties.getProperty("dmx.sendmail.smtp_password");
-        SMTP_PORT = pluginProperties.getProperty("dmx.sendmail.smtp_port");
+        SMTP_PORT = Integer.parseInt(pluginProperties.getProperty("dmx.sendmail.smtp_port"));
         SMTP_SECURITY = pluginProperties.getProperty("dmx.sendmail.smtp_security");
         log.info("dmx.sendmail.smtp_host: " + SMTP_HOST);
         log.info("dmx.sendmail.smtp_username: " + SMTP_USERNAME);
@@ -144,24 +144,35 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         // Hot Fix: Classloader issue we have in OSGi since using Pax web
         Thread.currentThread().setContextClassLoader(SendmailPlugin.class.getClassLoader());
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
-        HtmlEmail email = new HtmlEmail();
-        email.setDebug(true); // => System.out.println(SMTP communication);
-        email.setHostName(SMTP_HOST); // ### use getBaseUri() from HTTP Context?
+        HtmlEmail email = new HtmlEmail(); // Include in configurations options?
+        email.setDebug(true); // Include in configurations options?
+        email.setHostName(SMTP_HOST);
+        email.setSmtpPort(SMTP_PORT);
+        switch (SMTP_SECURITY.toLowerCase()) {
+            case "smtps":
+                email.setSSLOnConnect(true);
+                email.setSSLCheckServerIdentity(true);
+                log.info("Set SSLOnConnect + SSLCheckServerIdentity ...");
+            case "tls":
+                email.setStartTLSEnabled(true);
+                email.setStartTLSRequired(true);
+                log.info("Set TLSEnabled + TLSRequired ...");
+        }
+        if (!SMTP_USERNAME.isEmpty() && !SMTP_PASSWORD.isEmpty()) {
+            log.info("Using SMTP Authentication ...");
+            email.setAuthentication(SMTP_USERNAME, SMTP_PASSWORD);
+        }
         try {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
             email.setTextMsg(message);
-            // Gather recipients of notification mail
             String recipientValue = recipient.trim();
-            log.info("Loaded current configuration topic, sending notification mail to " + recipientValue);
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
             if (recipientValue.contains(";")) {
-                // ..) Many Recipients
                 for (String recipientPart : recipientValue.split(";")) {
                     recipients.add(new InternetAddress(recipientPart.trim()));
                 }
             } else {
-                // ..) A Single Recipient
                 recipients.add(new InternetAddress(recipientValue));
             }
             email.setTo(recipients);
