@@ -146,7 +146,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
         HtmlEmail email = new HtmlEmail();
         email.setDebug(true); // => System.out.println(SMTP communication);
-        email.setHostName("localhost"); // ### use getBaseUri() from HTTP Context?
+        email.setHostName(SMTP_HOST); // ### use getBaseUri() from HTTP Context?
         try {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
