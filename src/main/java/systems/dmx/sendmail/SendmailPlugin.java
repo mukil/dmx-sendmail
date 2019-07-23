@@ -52,8 +52,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private void loadPluginPropertiesConfig() throws IOException {
         Properties pluginProperties = new Properties();
         pluginProperties.load(getStaticResource("/plugin.properties"));
-        SYSTEM_FROM_NAME = pluginProperties.getProperty("dmx.sendmail.from_name");
-        SYSTEM_FROM_MAILBOX = pluginProperties.getProperty("dmx.sendmail.from_mailbox");
+        SYSTEM_FROM_NAME = pluginProperties.getProperty("dmx.sendmail.system_from_name");
+        SYSTEM_FROM_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_from_mailbox");
         SYSTEM_ADMIN_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_admin_mailbox");
         log.info("dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME);
         log.info("dmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX);
