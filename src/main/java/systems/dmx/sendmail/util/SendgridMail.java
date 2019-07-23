@@ -1,11 +1,10 @@
-package de.mikromedia.sendgrid.util;
+package systems.dmx.sendmail.util;
 
-import de.deepamehta.core.JSONEnabled;
-import static de.mikromedia.sendgrid.util.SendgridWebApiV3.BCC;
-import static de.mikromedia.sendgrid.util.SendgridWebApiV3.CC;
-import static de.mikromedia.sendgrid.util.SendgridWebApiV3.PERSONALIZATIONS;
-import static de.mikromedia.sendgrid.util.SendgridWebApiV3.SUBJECT;
-import static de.mikromedia.sendgrid.util.SendgridWebApiV3.TO;
+import static systems.dmx.sendmail.util.SendgridWebApiV3.BCC;
+import static systems.dmx.sendmail.util.SendgridWebApiV3.CC;
+import static systems.dmx.sendmail.util.SendgridWebApiV3.PERSONALIZATIONS;
+import static systems.dmx.sendmail.util.SendgridWebApiV3.SUBJECT;
+import static systems.dmx.sendmail.util.SendgridWebApiV3.TO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +16,7 @@ import java.util.logging.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import systems.dmx.core.JSONEnabled;
 
 /**
  * 

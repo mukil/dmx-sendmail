@@ -1,21 +1,49 @@
 <project xmlns:pom="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>Mikromedia DM 4 - Sendgrid API</name>
-    <groupId>de.mikromedia</groupId>
-    <artifactId>dm49-sendgrid</artifactId>
-    <version>1.1</version>
+    <name>DMX Sendmail</name>
+    <groupId>systems.dmx</groupId>
+    <artifactId>dmx-sendmail</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <parent>
-        <groupId>de.deepamehta</groupId>
-        <artifactId>deepamehta-plugin</artifactId>
-        <version>4.9.1</version>
+        <groupId>systems.dmx</groupId>
+        <artifactId>dmx-plugin</artifactId>
+        <version>5.0-beta-4</version>
     </parent>
 
-    <!--properties>
-        <dm4.deploy.dir>/home/malted/source/mikro/deepamehta/bundle-deploy</dm4.deploy.dir>
-    </properties-->
+    <properties>
+        <dmx.deploy.dir>/Users/malt/source/dmx/dmx-platform/bundle-deploy</dmx.deploy.dir>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+    </dependencies>
+
 
     <build>
         <plugins>
@@ -24,11 +52,15 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
+                        <Embed-Dependency>jsoup,mail,commons-email</Embed-Dependency>
+                        <Import-Package>
+                            sun.security.util;resolution:=optional,*
+                        </Import-Package>
                         <Bundle-SymbolicName>
-                            de.mikromedia.sendgrid
+                            systems.dmx.sendmail
                         </Bundle-SymbolicName>
                         <Bundle-Activator>
-                            de.mikromedia.sendgrid.SendgridPlugin
+                            systems.dmx.sendmail.SendmailPlugin
                         </Bundle-Activator>
                     </instructions>
                 </configuration>
@@ -38,8 +70,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

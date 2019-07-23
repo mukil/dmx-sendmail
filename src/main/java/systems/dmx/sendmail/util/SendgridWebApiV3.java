@@ -1,4 +1,4 @@
-package de.mikromedia.sendgrid.util;
+package systems.dmx.sendmail.util;
 
 import java.net.MalformedURLException;
 import java.util.logging.Logger;

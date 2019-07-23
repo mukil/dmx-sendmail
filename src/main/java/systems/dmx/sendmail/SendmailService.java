@@ -1,10 +1,10 @@
-package de.mikromedia.sendgrid;
+package systems.dmx.sendmail;
 
 /**
  * 
  * @author Malte Reißig
  */
-public interface SendgridService {
+public interface SendmailService {
 
     public void doEmailUser(String username, String subject, String message);
 
