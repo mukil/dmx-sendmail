@@ -1,7 +1,6 @@
 ## DMX Sendmail
 
-This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is sending emails.
-
+This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME` and `SYSTEM_FROM_MAILBOX`.
 
 ## Configuration
 
@@ -25,19 +24,24 @@ dmx.sendmail.sendgrid_api_key = empty
 
 ## License
 
-This is free software and comes to you without any warrant and under the terms of the GNU General Public License 3.0.
+DMX Sendmail software is available freely under the GNU Affero General Public License, version 3.
+
+All third party components incorporated into the DMX Sendmail Software are licensed under the original license provided by the owner of the applicable component.
 
 ## Release Notes
 
-**2.0.0**, Upcoming
+**1.2.0**, Upcoming
 
-**1.1** - 
+- Changed license from GPL to AGPL
+- Renamed artifact to `dmx-sendmail`
+- Adapted to DMX 5.0-beta-4
+- Support for sending mails via SMTP or Sendgrid
 
 **1.0**, Feb 12, 2017
 
-* Allows to send simple HTML Mails (From and To)
+* Allows to send simple HTML Mails (From and To) via Sendgrid
 
-## Author
+## Authors
 
-Malte Reißig (2016, 2017)
-
+Copyright (C) 2016-2018 Malte Reißig
+Copyright (C) 2019 DMX Systems

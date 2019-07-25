@@ -42,6 +42,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         try {
             loadPluginPropertiesConfig();
             // Test the service and our configuration
+            log.info("Sending test mail on init to \"" + SYSTEM_ADMIN_MAILBOX + "\"");
             doEmailSystemMailbox("Sendmail Plugin Activated", "Hello dear, this is your new email "
                + "sending service.\n\nWe hope you can enjoy the comforts!");
         } catch (IOException ex) {
