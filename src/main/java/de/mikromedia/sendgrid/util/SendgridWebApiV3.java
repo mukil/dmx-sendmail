@@ -35,10 +35,18 @@ public class SendgridWebApiV3 {
         this.defaultFromName = fromName;
     }
 
-    public SendgridMail newMailFromTo(String from, String fromName, String recipient, String recipientName,
+    public SendgridMail newMailFromTo(String from, String fromName, String recipients, String recipientName,
             String subject, String message) throws JSONException {
         SendgridMail sendgridMail = new SendgridMail(this.apiKey, from, fromName);
-        sendgridMail.addRecipient(recipient, recipientName, TO, subject);
+        if (recipients.contains(";")) {
+            String[] recipientList = recipients.split(";");
+            for (int i = 0; i < recipientList.length; i++) {
+                String recipient = recipientList[i];
+                sendgridMail.addRecipient(recipient, null, TO, subject);
+            }
+        } else {
+            sendgridMail.addRecipient(recipients, recipientName, TO, subject);
+        }
         sendgridMail.addHTMLTextMessage(message);;
         return sendgridMail;
     }
