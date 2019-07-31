@@ -42,7 +42,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         try {
             loadPluginPropertiesConfig();
             // Test the service and our configuration
-            log.info("Sending test mail on init to \"" + SYSTEM_ADMIN_MAILBOX + "\"");
+            log.info("Sending test mail per " + SENDMAIL_TYPE + " on init to \"" + SYSTEM_ADMIN_MAILBOX + "\"");
             doEmailSystemMailbox("Sendmail Plugin Activated", "Hello dear, this is your new email "
                + "sending service.\n\nWe hope you can enjoy the comforts!");
         } catch (IOException ex) {
@@ -56,23 +56,33 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         SYSTEM_FROM_NAME = pluginProperties.getProperty("dmx.sendmail.system_from_name");
         SYSTEM_FROM_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_from_mailbox");
         SYSTEM_ADMIN_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_admin_mailbox");
-        log.info("dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME);
-        log.info("dmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX);
-        log.info("dmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX);
         SENDMAIL_TYPE = pluginProperties.getProperty("dmx.sendmail.type");
-        log.info("dmx.sendmail.type: " + SENDMAIL_TYPE);
+        log.info("dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
+            + "\tdmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
+            + "\tdmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
+            + "\tdmx.sendmail.type: " + SENDMAIL_TYPE);
         SMTP_HOST = pluginProperties.getProperty("dmx.sendmail.smtp_host");
         SMTP_USERNAME = pluginProperties.getProperty("dmx.sendmail.smtp_username");
         SMTP_PASSWORD = pluginProperties.getProperty("dmx.sendmail.smtp_password");
         SMTP_PORT = Integer.parseInt(pluginProperties.getProperty("dmx.sendmail.smtp_port"));
         SMTP_SECURITY = pluginProperties.getProperty("dmx.sendmail.smtp_security");
-        log.info("dmx.sendmail.smtp_host: " + SMTP_HOST);
-        log.info("dmx.sendmail.smtp_username: " + SMTP_USERNAME);
-        log.info("dmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" );
-        log.info("dmx.sendmail.smtp_port: " + SMTP_PORT);
-        log.info("dmx.sendmail.smtp_security: " + SMTP_SECURITY);
-        SENDGRID_API_KEY = pluginProperties.getProperty("dm4.sendgrid.api_key");
-        log.info("dmx.sendmail.sendgrid_api_key: KEY HIDDEN FOR LOG");
+        if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
+        log.info("dmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
+            + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
+            + "\tdmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
+            + "\tdmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
+            + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY);
+        } else if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
+            SENDGRID_API_KEY = pluginProperties.getProperty("dmx.sendmail.sendgrid_api_key");
+            if (SENDGRID_API_KEY.isEmpty()) {
+                log.severe("Configuration Error: DMX Sendmail is configured to send mails via "
+                        + "Sendgrid API but has no\"dmx.sendmail.sendgrid_api_key\" value set");
+            } else {
+                log.info("dmx.sendmail.sendgrid_api_key: API KEY HIDDEN FOR LOG");
+            }
+        } else {
+            log.severe("Configuration Error: DMX Sendmail has an invalid \"dmx.sendmail.type\" value set");
+        }
     }
 
     @Override
@@ -131,7 +141,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
                 sendSystemMail(subject, textMessage, recipientMailbox);
             }
         } catch (Exception json) {
-            throw new RuntimeException("Sending mail failed", json);
+            throw new RuntimeException("Sending mail via " + SENDMAIL_TYPE + " failed", json);
         }
     }
     

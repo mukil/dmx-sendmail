@@ -1,6 +1,6 @@
 ## DMX Sendmail
 
-This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME` and `SYSTEM_FROM_MAILBOX`.
+This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME and `SYSTEM_FROM_MAILBOX`.
 
 ## Configuration
 
@@ -43,5 +43,5 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 ## Authors
 
-Copyright (C) 2016-2018 Malte Reißig
+Copyright (C) 2016-2018 Malte Reißig<br/>
 Copyright (C) 2019 DMX Systems
