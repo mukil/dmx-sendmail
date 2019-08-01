@@ -90,7 +90,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     public void doEmailUser(String username, String subject, String message) {
         String userMailbox = dmx.getPrivilegedAccess().getEmailAddress(username);
         if (userMailbox != null) {
-            sendPlainMailTo(userMailbox, subject, message);
+            sendMailTo(userMailbox, subject, message);
         } else {
             log.severe("Sending email notification to user not possible, \""
                     +username+"\" has not signed-up with an Email Address");
@@ -102,7 +102,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         String senderMailbox = dmx.getPrivilegedAccess().getEmailAddress(toUsername);
         String recipientMailbox = dmx.getPrivilegedAccess().getEmailAddress(toUsername);
         if (recipientMailbox != null && senderMailbox != null) {
-            sendPlainMailFromTo(senderMailbox, fromUsername, recipientMailbox, toUsername, subject, message);
+            sendMailFromTo(senderMailbox, fromUsername, recipientMailbox, toUsername, subject, message);
         } else {
             log.severe("Sending email notification to user not possible. Either \""
                     +toUsername+"\" or \"" + fromUsername + "\" has not signed-up with an Email Address");
@@ -112,34 +112,34 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     @Override
     public void doEmailRecipientAs(String from, String fromName,
             String subject, String message, String recipientMail) {
-        sendPlainMailFromTo(from, fromName, recipientMail, null, subject, message);
+        sendMailFromTo(from, fromName, recipientMail, null, subject, message);
     }
 
     @Override
     public void doEmailRecipient(String subject, String message, String recipientMail) {
-        sendPlainMailTo(recipientMail, subject, message);
+        sendMailTo(recipientMail, subject, message);
     }
 
     @Override
     public void doEmailSystemMailbox(String subject, String message) {
-        sendPlainMailTo(SYSTEM_ADMIN_MAILBOX, subject, message);
+        sendMailTo(SYSTEM_ADMIN_MAILBOX, subject, message);
     }
 
-    private void sendPlainMailTo(String recipient, String subject, String textMessage) {
-        sendPlainMailFromTo(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME, recipient, null, subject, textMessage);
+    private void sendMailTo(String recipient, String subject, String textMessage) {
+        sendMailFromTo(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME, recipient, null, subject, textMessage);
     }
 
-    private void sendPlainMailFromTo(String sender, String senderName, String recipientMailbox,
-            String recipientName, String subject, String textMessage) {
+    private void sendMailFromTo(String sender, String senderName, String recipientMailbox,
+            String recipientName, String subject, String htmlMessage) {
         try {
             // Send mail using the Sendgrid API
             if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
                 SendgridWebApiV3 mailApi = new SendgridWebApiV3(SENDGRID_API_KEY);
-                SendgridMail mail = mailApi.newMailFromTo(sender, senderName, recipientMailbox, recipientName, subject, textMessage);
+                SendgridMail mail = mailApi.newMailFromTo(sender, senderName, recipientMailbox, recipientName, subject, htmlMessage);
                 mail.send();
             // Send mail using the SMTP Protocol
             } else if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
-                sendSystemMail(subject, textMessage, recipientMailbox);
+                sendSystemMail(recipientMailbox, subject, htmlMessage);
             }
         } catch (Exception json) {
             throw new RuntimeException("Sending mail via " + SENDMAIL_TYPE + " failed", json);
@@ -150,9 +150,9 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
      * @param recipient     String of Email Addresses message is sent to.
      *                      Multiple recipients can be separated by ";". **Must not** be NULL.
      * @param subject       String Subject text for the message.
-     * @param message       String Text content of the message.
+     * @param htmlMessage       String Text content of the message.
      */
-    private void sendSystemMail(String recipient, String subject, String message) {
+    private void sendSystemMail(String recipient, String subject, String htmlMessage) {
         // Hot Fix: Classloader issue we have in OSGi since using Pax web
         Thread.currentThread().setContextClassLoader(SendmailPlugin.class.getClassLoader());
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
@@ -164,21 +164,21 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             case "smtps":
                 email.setSSLOnConnect(true);
                 email.setSSLCheckServerIdentity(true);
-                log.info("Set SSLOnConnect + SSLCheckServerIdentity ...");
+                log.info("Set SSLOnConnect + SSLCheckServerIdentity...");
             case "tls":
                 email.setStartTLSEnabled(true);
                 email.setStartTLSRequired(true);
-                log.info("Set TLSEnabled + TLSRequired ...");
+                log.info("Set TLSEnabled + TLSRequired...");
         }
         if (!SMTP_USERNAME.isEmpty() && !SMTP_PASSWORD.isEmpty()) {
-            log.info("Using SMTP Authentication ...");
+            log.info("Using SMTP Authentication...");
             email.setAuthentication(SMTP_USERNAME, SMTP_PASSWORD);
         }
         try {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
-            email.setHtmlMsg(message);
-            email.setTextMsg(JavaUtils.stripHTML(message));
+            email.setHtmlMsg(htmlMessage);
+            email.setTextMsg(JavaUtils.stripHTML(htmlMessage));
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
             if (recipientValue.contains(";")) {
