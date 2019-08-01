@@ -12,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import org.apache.commons.mail.HtmlEmail;
 import systems.dmx.core.osgi.PluginActivator;
 import systems.dmx.core.service.CoreService;
+import systems.dmx.core.util.JavaUtils;
 
 /**
  * 
@@ -176,7 +177,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         try {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
-            email.setTextMsg(message);
+            email.setHtmlMsg(message);
+            email.setTextMsg(JavaUtils.stripHTML(message));
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
             if (recipientValue.contains(";")) {
