@@ -162,16 +162,11 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         email.setSmtpPort(SMTP_PORT);
         switch (SMTP_SECURITY.toLowerCase()) {
             case "smtps":
-                // ### Todo: Test this option
                 email.setSSLOnConnect(true);
-                // ### Discuss: CheckServerIdentity...
-                email.setSSLCheckServerIdentity(true);
-                log.info("Set SSLOnConnect + SSLCheckServerIdentity...");
+                log.info("Set SSLOnConnect...");
             case "tls":
-                // Tested
                 email.setSSLOnConnect(true);
                 email.setStartTLSEnabled(true);
-                // ### Discuss Option: email.setStartTLSRequired(true);
                 log.info("Set SSLOnConnet + TLSEnabled...");
         }
         if (!SMTP_USERNAME.isEmpty() && !SMTP_PASSWORD.isEmpty()) {
