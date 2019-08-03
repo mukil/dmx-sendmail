@@ -13,10 +13,6 @@
         <version>5.0-beta-4</version>
     </parent>
 
-    <properties>
-        <dmx.deploy.dir>/Users/malt/source/dmx/dmx-platform/bundle-deploy</dmx.deploy.dir>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.mail</groupId>
