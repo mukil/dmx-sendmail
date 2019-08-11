@@ -15,7 +15,7 @@ The plugins default configuration is represented by the values before the `|` in
 ```
 // Plugin Configuration
 dmx.sendmail.system_admin_mailbox = root@dlocalhost | admin@domain.tld
-dmx.sendmail.system_from_mailbox = dmx@localhost
+dmx.sendmail.system_from_mailbox = dmx@localhost | your@system.com
 dmx.sendmail.system_from_name = DMX Sendmail | Your System Name
 dmx.sendmail.type = smtp | sendgrid
 
