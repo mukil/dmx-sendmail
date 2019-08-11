@@ -7,18 +7,23 @@ This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](
 
 ## Configuration
 
+To configure the dmx-sendmail plugin you can set the following system properties, e.g. trough adding them to the `config.properties` file of your DMX installation (`dmx-platform/conf/config.properties`).
+
+The plugins default configuration is represented by the values before the `|` in the following section:
+
+
 ```
 // Plugin Configuration
-dmx.sendmail.system_mailbox = your@domain.tld
-dmx.sendmail.system_from_mailbox = no-reply@domain.tld
-dmx.sendmail.system_from_name = Your System Name
-dmx.sendmail.type = smtp
+dmx.sendmail.system_admin_mailbox = root@dlocalhost | admin@domain.tld
+dmx.sendmail.system_from_mailbox = dmx@localhost
+dmx.sendmail.system_from_name = DMX Sendmail | Your System Name
+dmx.sendmail.type = smtp | sendgrid
 
 // SMTP Configuration
 dmx.sendmail.smtp_host = localhost | ip/hostname
 dmx.sendmail.smtp_username = empty | username
 dmx.sendmail.smtp_password = empty | password
-dmx.sendmail.smtp_port = empty | port
+dmx.sendmail.smtp_port = 25 | port
 dmx.sendmail.smtp_security = empty | tls | smtps
 
 // Sendgrid Configuration
