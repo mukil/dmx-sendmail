@@ -1,6 +1,9 @@
+
+> The `dm4-sendgrid` GitHub repo is a mirror repo. The master repo is `dmx-sendmail`, hosted at the DMX company's [GitLab](https://git.dmx.systems/dmx-plugins/dmx-sendmail). DeepaMehta was rebranded as DMX. DeepaMehta 5 and DMX is the same; same code; same features; similar free software license (AGPL-3.0 vs GPL-3.0). The master branch represents DeepaMehta 5. For DeepaMehta 4 switch to the [dm4 branch](/mukil/dm4-sendgrid/tree/dm4).
+
 ## DMX Sendmail
 
-This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME and `SYSTEM_FROM_MAILBOX`.
+This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME` and `SYSTEM_FROM_MAILBOX`.
 
 ## Configuration
 

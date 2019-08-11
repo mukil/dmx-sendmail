@@ -23,17 +23,17 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private static Logger log = Logger.getLogger(SendmailPlugin.class.getName());
 
     // Sender Information
-    private String SYSTEM_FROM_NAME = null;
-    private String SYSTEM_FROM_MAILBOX = null;
+    private String SYSTEM_FROM_NAME = null; // DMX Sendmail | Your Name
+    private String SYSTEM_FROM_MAILBOX = null; // dmx@localhost | Your Email Address
     // Recipient Information
-    private String SYSTEM_ADMIN_MAILBOX = null;
+    private String SYSTEM_ADMIN_MAILBOX = null; // root@localhost | Your Admin's Email Address
     // Plugin Configuration
     private String SENDMAIL_TYPE = null; // smtp | sendgrid
     // SMTP Configuration
     private String SMTP_HOST = null; // localhost | ip/hostname  
     private String SMTP_USERNAME = null; // empty | username
     private String SMTP_PASSWORD = null; // empty | password
-    private int SMTP_PORT = -1; // empty | port
+    private int SMTP_PORT = -1; // 25 | port
     private String SMTP_SECURITY = null; // empty | tls | smtps
     // Sendgrid API Configuration
     private String SENDGRID_API_KEY = null; // empty
@@ -52,29 +52,36 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     }
 
     private void loadPluginPropertiesConfig() throws IOException {
-        Properties pluginProperties = new Properties();
-        pluginProperties.load(getStaticResource("/plugin.properties"));
-        SYSTEM_FROM_NAME = pluginProperties.getProperty("dmx.sendmail.system_from_name");
-        SYSTEM_FROM_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_from_mailbox");
-        SYSTEM_ADMIN_MAILBOX = pluginProperties.getProperty("dmx.sendmail.system_admin_mailbox");
-        SENDMAIL_TYPE = pluginProperties.getProperty("dmx.sendmail.type");
+        String sendmailType = System.getProperty("dmx.sendmail.type");
+        SENDMAIL_TYPE = (sendmailType == null) ? "smtp" : sendmailType.trim();
+        String fromName = System.getProperty("dmx.sendmail.system_from_name");
+        SYSTEM_FROM_NAME = (fromName == null) ? "DMX Sendmail" : fromName.trim();
+        String fromMailbox = System.getProperty("dmx.sendmail.system_from_mailbox");
+        SYSTEM_FROM_MAILBOX = (fromMailbox == null) ? "dmx@localhost" : fromMailbox.trim();
+        String adminMailbox = System.getProperty("dmx.sendmail.system_admin_mailbox");
+        SYSTEM_ADMIN_MAILBOX = (adminMailbox == null) ? "root@localhost" : adminMailbox.trim();
         log.info("dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
             + "\tdmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
             + "\tdmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
             + "\tdmx.sendmail.type: " + SENDMAIL_TYPE);
-        SMTP_HOST = pluginProperties.getProperty("dmx.sendmail.smtp_host");
-        SMTP_USERNAME = pluginProperties.getProperty("dmx.sendmail.smtp_username");
-        SMTP_PASSWORD = pluginProperties.getProperty("dmx.sendmail.smtp_password");
-        SMTP_PORT = Integer.parseInt(pluginProperties.getProperty("dmx.sendmail.smtp_port"));
-        SMTP_SECURITY = pluginProperties.getProperty("dmx.sendmail.smtp_security");
+        String smtpHostName = System.getProperty("dmx.sendmail.smtp_host");
+        SMTP_HOST = (smtpHostName == null) ? "localhost" : smtpHostName.trim();
+        String smtpUsername = System.getProperty("dmx.sendmail.smtp_username");
+        SMTP_USERNAME = (smtpUsername == null) ? "" : smtpUsername.trim();
+        String passwd = System.getProperty("dmx.sendmail.smtp_password");
+        SMTP_PASSWORD = (passwd == null) ? "" : passwd;
+        String smtpPort = System.getProperty("dmx.sendmail.smtp_port");
+        SMTP_PORT = (smtpPort == null) ? 25 : Integer.parseInt(smtpPort);
+        String smtpSecurity = System.getProperty("dmx.sendmail.smtp_security");
+        SMTP_SECURITY = (smtpSecurity == null) ? "" : smtpSecurity.trim();
         if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
-        log.info("dmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
-            + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
-            + "\tdmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
-            + "\tdmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
-            + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY);
+            log.info("dmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
+                + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
+                + "\tdmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
+                + "\tdmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
+                + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY);
         } else if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
-            SENDGRID_API_KEY = pluginProperties.getProperty("dmx.sendmail.sendgrid_api_key");
+            SENDGRID_API_KEY = System.getProperty("dmx.sendmail.sendgrid_api_key");
             if (SENDGRID_API_KEY.isEmpty()) {
                 log.severe("Configuration Error: DMX Sendmail is configured to send mails via "
                         + "Sendgrid API but has no\"dmx.sendmail.sendgrid_api_key\" value set");
