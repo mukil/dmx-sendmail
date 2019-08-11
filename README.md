@@ -8,6 +8,10 @@ This is free software and comes to you without any warrant and under the terms o
 
 ## Release Notes
 
+**1.2**, Aug 11, 2019
+
+* Bugfix release for kiezatlas.berlin
+
 **1.0**, Feb 12, 2017
 
 * Allows to send simple HTML Mails (From and To)
