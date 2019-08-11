@@ -38,12 +38,16 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 ## Release Notes
 
-**1.2.0**, Upcoming
+**2.0.0**, Upcoming
 
 - Changed license from GPL to AGPL
 - Renamed artifact to `dmx-sendmail`
 - Adapted to DMX 5.0-beta-4
 - Support for sending mails via SMTP or Sendgrid
+
+**1.2**, Aug 11, 2019
+
+* Bugfix release for kiezatlas.berlin
 
 **1.0**, Feb 12, 2017
 
