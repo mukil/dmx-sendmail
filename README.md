@@ -13,20 +13,21 @@ The plugins default configuration is represented by the values before the `|` in
 
 
 ```
-// Plugin Configuration
+## Sendmail Plugin ## 
 dmx.sendmail.system_admin_mailbox = root@dlocalhost | admin@domain.tld
 dmx.sendmail.system_from_mailbox = dmx@localhost | your@system.com
 dmx.sendmail.system_from_name = DMX Sendmail | Your System Name
 dmx.sendmail.type = smtp | sendgrid
 
-// SMTP Configuration
+## Sendmail SMTP Configuration
 dmx.sendmail.smtp_host = localhost | ip/hostname
 dmx.sendmail.smtp_username = empty | username
 dmx.sendmail.smtp_password = empty | password
 dmx.sendmail.smtp_port = 25 | port
 dmx.sendmail.smtp_security = empty | tls | smtps
+dmx.sendmail.smtp_debug = true | false
 
-// Sendgrid Configuration
+## Sendmail Sendgrid Configuration
 dmx.sendmail.sendgrid_api_key = empty
 ```
 
