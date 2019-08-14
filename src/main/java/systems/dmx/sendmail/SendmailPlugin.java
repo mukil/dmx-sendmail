@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import org.apache.commons.mail.HtmlEmail;
 import systems.dmx.core.osgi.PluginActivator;
@@ -35,6 +36,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private String SMTP_PASSWORD = null; // empty | password
     private int SMTP_PORT = -1; // 25 | port
     private String SMTP_SECURITY = null; // empty | tls | smtps
+    private boolean SMTP_DEBUG = true; // true | false
     // Sendgrid API Configuration
     private String SENDGRID_API_KEY = null; // empty
 
@@ -60,7 +62,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         SYSTEM_FROM_MAILBOX = (fromMailbox == null) ? "dmx@localhost" : fromMailbox.trim();
         String adminMailbox = System.getProperty("dmx.sendmail.system_admin_mailbox");
         SYSTEM_ADMIN_MAILBOX = (adminMailbox == null) ? "root@localhost" : adminMailbox.trim();
-        log.info("dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
+        log.info("\n\tdmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
             + "\tdmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
             + "\tdmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
             + "\tdmx.sendmail.type: " + SENDMAIL_TYPE);
@@ -74,12 +76,15 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         SMTP_PORT = (smtpPort == null) ? 25 : Integer.parseInt(smtpPort);
         String smtpSecurity = System.getProperty("dmx.sendmail.smtp_security");
         SMTP_SECURITY = (smtpSecurity == null) ? "" : smtpSecurity.trim();
+        String smtpDebug = System.getProperty("dmx.sendmail.smtp_debug");
+        SMTP_DEBUG = (smtpDebug == null) ? true : Boolean.parseBoolean(smtpDebug);
         if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
-            log.info("dmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
+            log.info("\n\tdmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
                 + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
                 + "\tdmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
                 + "\tdmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
-                + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY);
+                + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY + "\n"
+                + "\tdmx.sendmail.smtp_debug: " + SMTP_DEBUG);
         } else if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
             SENDGRID_API_KEY = System.getProperty("dmx.sendmail.sendgrid_api_key");
             if (SENDGRID_API_KEY.isEmpty()) {
@@ -164,18 +169,20 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         Thread.currentThread().setContextClassLoader(SendmailPlugin.class.getClassLoader());
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
         HtmlEmail email = new HtmlEmail(); // Include in configurations options?
-        email.setDebug(true); // Include in configurations options?
+        email.setDebug(SMTP_DEBUG); // Include in configurations options?
         email.setHostName(SMTP_HOST);
         email.setSmtpPort(SMTP_PORT);
-        switch (SMTP_SECURITY.toLowerCase()) {
-            case "smtps":
-                email.setSSLOnConnect(true);
-                log.info("Set SSLOnConnect...");
-            case "tls":
-                email.setSSLOnConnect(true);
-                email.setStartTLSEnabled(true);
-                log.info("Set SSLOnConnet + TLSEnabled...");
+        if(SMTP_SECURITY.toLowerCase().equals("smtps")) {
+            email.setSslSmtpPort("" + SMTP_PORT);
+            email.setSSLOnConnect(true);
+            log.info("Set SSLOnConnect...");
+        } else if (SMTP_SECURITY.toLowerCase().equals("tls")) {
+            email.setSslSmtpPort("" + SMTP_PORT);
+            email.setSSLOnConnect(true);
+            email.setStartTLSEnabled(true);
+            log.info("Set SSLOnConnect + StartTLSEnabled...");
         }
+        // SMTP Auth
         if (!SMTP_USERNAME.isEmpty() && !SMTP_PASSWORD.isEmpty()) {
             log.info("Using SMTP Authentication...");
             email.setAuthentication(SMTP_USERNAME, SMTP_PASSWORD);
