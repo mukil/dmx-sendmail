@@ -36,7 +36,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private String SMTP_PASSWORD = null; // empty | password
     private int SMTP_PORT = -1; // 25 | port
     private String SMTP_SECURITY = null; // empty | tls | smtps
-    private boolean SMTP_DEBUG = true; // true | false
+    private boolean SMTP_DEBUG = false; // false | true
     // Sendgrid API Configuration
     private String SENDGRID_API_KEY = null; // empty
 
@@ -77,7 +77,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         String smtpSecurity = System.getProperty("dmx.sendmail.smtp_security");
         SMTP_SECURITY = (smtpSecurity == null) ? "" : smtpSecurity.trim();
         String smtpDebug = System.getProperty("dmx.sendmail.smtp_debug");
-        SMTP_DEBUG = (smtpDebug == null) ? true : Boolean.parseBoolean(smtpDebug);
+        SMTP_DEBUG = (smtpDebug == null) ? SMTP_DEBUG : Boolean.parseBoolean(smtpDebug);
         if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
             log.info("\n\tdmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
                 + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
@@ -169,7 +169,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         Thread.currentThread().setContextClassLoader(SendmailPlugin.class.getClassLoader());
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
         HtmlEmail email = new HtmlEmail(); // Include in configurations options?
-        email.setDebug(SMTP_DEBUG); // Include in configurations options?
+        email.setDebug(SMTP_DEBUG);
         email.setHostName(SMTP_HOST);
         email.setSmtpPort(SMTP_PORT);
         if(SMTP_SECURITY.toLowerCase().equals("smtps")) {
