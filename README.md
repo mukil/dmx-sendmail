@@ -1,16 +1,15 @@
 
-> The `dm4-sendgrid` GitHub repo is a mirror repo. The master repo is `dmx-sendmail`, hosted at the DMX company's [GitLab](https://git.dmx.systems/dmx-plugins/dmx-sendmail). DeepaMehta was rebranded as DMX. DeepaMehta 5 and DMX is the same; same code; same features; similar free software license (AGPL-3.0 vs GPL-3.0). The master branch represents DeepaMehta 5. For DeepaMehta 4 switch to the [dm4 branch](/mukil/dm4-sendgrid/tree/dm4).
+> The `dm4-sendgrid` GitHub repo is a mirror repo. The master repo is `dmx-sendmail`, hosted at the DMX company's [GitLab](https://git.dmx.systems/dmx-plugins/dmx-sendmail). DeepaMehta was rebranded as DMX. DeepaMehta 5 and DMX is the same; same code; same features; similar free software license (AGPL-3.0 vs GPL-3.0). The master branch represents DeepaMehta 5. For DeepaMehta 4 switch to the [dm4 branch](/tree/dm4).
 
 ## DMX Sendmail
 
-This DMX Plugin is a wrapper to the SMTP Protocol and the [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME` and `SYSTEM_FROM_MAILBOX`.
+This DMX Plugin can be used to send e-mails via SMTP or via [Sendgrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html). It's core feature is a service which allows other plugins to send emails to the `SYSTEM_ADMIN_MAILBOX` or to one or many other recipients with the sender being `SYSTEM_FROM_NAME` and `SYSTEM_FROM_MAILBOX`.
 
 ## Configuration
 
-To configure the dmx-sendmail plugin you can set the following system properties, e.g. trough adding them to the `config.properties` file of your DMX installation (`dmx-platform/conf/config.properties`).
+To configure the dmx-sendmail plugin you can set the following system properties, e.g. trough adding them to the `config.properties` file of your DMX installation (`dmx-platform/conf/config.properties`). When running dmx-platform from sources configuration needs to be done in the platforms `pom.xml`.
 
 The plugins default configuration is represented by the values before the `|` in the following section:
-
 
 ```
 ## Sendmail Plugin ## 
@@ -39,11 +38,11 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 ## Release Notes
 
-**2.0.0**, Upcoming
+**2.0.0**, Dec 15, 2019
 
 - Changed license from GPL to AGPL
 - Renamed artifact to `dmx-sendmail`
-- Adapted to DMX 5.0-beta-4
+- Adapted to DMX 5.0-beta-4+
 - Support for sending mails via SMTP or Sendgrid
 
 **1.2**, Aug 11, 2019
