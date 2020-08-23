@@ -56,4 +56,4 @@ All third party components incorporated into the DMX Sendmail Software are licen
 ## Authors
 
 Copyright (C) 2016-2018 Malte Reißig<br/>
-Copyright (C) 2019 DMX Systems
+Copyright (C) 2019-2020 DMX Systems
