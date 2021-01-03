@@ -36,7 +36,19 @@ DMX Sendmail software is available freely under the GNU Affero General Public Li
 
 All third party components incorporated into the DMX Sendmail Software are licensed under the original license provided by the owner of the applicable component.
 
+- JavaMail API (compat) 1.4.5, [CDDL 1.0](https://javaee.github.io/javamail/LICENSE), Copyright (c) 2020 Oracle
+- JavaBeans(TM) Activation Framework 1.1.1, [CDDL 1.0](https://spdx.org/licenses/CDDL-1.0.html), Copyright (c) 2020 Oracle
+- Commons Email 1.3.2, [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), Copyright (c) 2001-2018 The Apache Software Foundation. All Rights Reserved.
+- Jsoup 1.7.2, [MIT License](https://jsoup.org/license), Copyright (c) 2009-2020 Jonathan Hedley (https://jsoup.org/)
+- Commons IO, [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), Copyright (c) 2002-2020 The Apache Software Foundation. All Rights Reserved.
+
+
 ## Release Notes
+
+**2.0.1**, Jan 03, 2021
+
+- Upgraded dependencies to DMX 5.1
+- Added copyright notices for dependencies
 
 **2.0.0**, Dec 15, 2019
 
