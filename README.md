@@ -45,6 +45,10 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 ## Release Notes
 
+**2.0.2**, Jun 30, 2021
+
+- Compatible with DMX 5.2
+
 **2.0.1**, Jan 03, 2021
 
 - Upgraded dependencies to DMX 5.1

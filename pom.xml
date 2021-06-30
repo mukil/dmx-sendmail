@@ -4,13 +4,13 @@
     <name>DMX Sendmail</name>
     <groupId>systems.dmx</groupId>
     <artifactId>dmx-sendmail</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <packaging>bundle</packaging>
 
     <parent>
         <groupId>systems.dmx</groupId>
         <artifactId>dmx-plugin</artifactId>
-        <version>5.1</version>
+        <version>5.2</version>
     </parent>
 
     <dependencies>
