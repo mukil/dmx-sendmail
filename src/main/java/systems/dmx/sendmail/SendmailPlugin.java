@@ -189,7 +189,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             String textMessage = JavaUtils.stripHTML(htmlMessage);
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
-            email.setHtmlMsg(htmlMessage);
+            email.setHtmlMsg(new String(htmlMessage.getBytes("UTF-8"), 0));
             email.setTextMsg(textMessage);
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
