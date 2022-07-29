@@ -190,7 +190,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             log.info("textMessage=\"" + textMessage + "\"+\rhtmlMessage=\"" + htmlMessage + "\"");
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
-            email.setHtmlMsg(htmlMessage);
+            email.setMsg(textMessage);
+            // email.setHtmlMsg(htmlMessage);
             // email.setTextMsg(textMessage);
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
