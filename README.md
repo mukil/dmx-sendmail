@@ -17,6 +17,9 @@ dmx.sendmail.system_admin_mailbox = root@dlocalhost | admin@domain.tld
 dmx.sendmail.system_from_mailbox = dmx@localhost | your@system.com
 dmx.sendmail.system_from_name = DMX Sendmail | Your System Name
 dmx.sendmail.type = smtp | sendgrid
+dmx.sendmail.greeting_enabled = false | true
+#dmx.sendmail.greeting_subject = <The subject for the greeting email>
+#dmx.sendmail.greeting_message = <The message for the greeting email>
 
 ## Sendmail SMTP Configuration
 dmx.sendmail.smtp_host = localhost | ip/hostname
@@ -44,6 +47,10 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 
 ## Release Notes
+
+**2.0.3**, TBD
+
+- Add greeting enabled and message configuration option
 
 **2.0.2**, Jun 30, 2021
 
