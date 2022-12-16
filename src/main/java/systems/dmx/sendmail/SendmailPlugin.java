@@ -28,6 +28,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private String SYSTEM_ADMIN_MAILBOX = null; // root@localhost | Your Admin's Email Address
     // Plugin Configuration
     private String SENDMAIL_TYPE = null; // smtp | sendgrid
+
     // SMTP Configuration
     private String SMTP_HOST = null; // localhost | ip/hostname  
     private String SMTP_USERNAME = null; // empty | username
@@ -38,14 +39,23 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     // Sendgrid API Configuration
     private String SENDGRID_API_KEY = null; // empty
 
+    private boolean GREETING_ENABLED = false;
+
+    private String GREETING_SUBJECT;
+    private final String DEFAULT_GREETING_SUBJECT = "Sendmail Plugin Activated";
+    private String GREETING_MESSAGE;
+
+    private final String DEFAULT_GREETING_MESSAGE = "Hello dear, this is your new email sending service.\n\nWe hope you can enjoy the comforts!";
+
     @Override
     public void init() {
         try {
             loadPluginPropertiesConfig();
             // Test the service and our configuration
             log.info("Sending test mail per " + SENDMAIL_TYPE + " on init to \"" + SYSTEM_ADMIN_MAILBOX + "\"");
-            doEmailSystemMailbox("Sendmail Plugin Activated", "Hello dear, this is your new email "
-               + "sending service.\n\nWe hope you can enjoy the comforts!");
+            if (GREETING_ENABLED) {
+                doEmailSystemMailbox(GREETING_SUBJECT, GREETING_MESSAGE);
+            }
         } catch (IOException ex) {
             Logger.getLogger(SendmailPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,6 +74,14 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             + "\tdmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
             + "\tdmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
             + "\tdmx.sendmail.type: " + SENDMAIL_TYPE);
+
+        GREETING_ENABLED = Boolean.parseBoolean(System.getProperty("dmx.sendmail.greeting_enabled", "false"));
+        log.info("\n\tdmx.sendmail.greeting_enabled: " + GREETING_ENABLED);
+        GREETING_SUBJECT = System.getProperty("dmx.sendmail.greeting_subject", DEFAULT_GREETING_SUBJECT);
+        log.info("\n\tdmx.sendmail.greeting_subject: " + (GREETING_SUBJECT.equals(DEFAULT_GREETING_SUBJECT) ? "<built-in subject>" : "<custom subject>"));
+        GREETING_MESSAGE = System.getProperty("dmx.sendmail.greeting_message", DEFAULT_GREETING_MESSAGE);
+        log.info("\n\tdmx.sendmail.greeting_message: " + (GREETING_MESSAGE.equals(DEFAULT_GREETING_MESSAGE) ? "<built-in message>" : "<custom message>"));
+
         String smtpHostName = System.getProperty("dmx.sendmail.smtp_host");
         SMTP_HOST = (smtpHostName == null) ? "localhost" : smtpHostName.trim();
         String smtpUsername = System.getProperty("dmx.sendmail.smtp_username");

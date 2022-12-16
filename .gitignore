@@ -1,2 +1,14 @@
-/target/
+target/
+deploy/instance
+src/main/resources/web/
+.idea/
+.externalToolBuilders/
+.settings
+.project
+.classpath
+.DS_Store
+commit.txt
 commit-message.txt
+package-lock.json
+node_modules
+*.iml
