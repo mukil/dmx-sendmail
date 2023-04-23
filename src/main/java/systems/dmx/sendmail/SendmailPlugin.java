@@ -45,7 +45,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
     private final String DEFAULT_GREETING_SUBJECT = "Sendmail Plugin Activated";
     private String GREETING_MESSAGE;
 
-    private final String DEFAULT_GREETING_MESSAGE = "Hello dear, this is your new email sending service.\n\nWe hope you can enjoy the comforts!";
+    private final String DEFAULT_GREETING_MESSAGE = "Hello dear, this is your new email sending service.\n\n" +
+        "We hope you can enjoy the comforts!";
 
     @Override
     public void init() {
@@ -70,17 +71,19 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         SYSTEM_FROM_MAILBOX = (fromMailbox == null) ? "dmx@localhost" : fromMailbox.trim();
         String adminMailbox = System.getProperty("dmx.sendmail.system_admin_mailbox");
         SYSTEM_ADMIN_MAILBOX = (adminMailbox == null) ? "root@localhost" : adminMailbox.trim();
-        log.info("\n\tdmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
-            + "\tdmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
-            + "\tdmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
-            + "\tdmx.sendmail.type: " + SENDMAIL_TYPE);
+        log.info("\n  dmx.sendmail.system_from_name: " + SYSTEM_FROM_NAME + "\n"
+            + "  dmx.sendmail.system_from_mailbox: " + SYSTEM_FROM_MAILBOX + "\n"
+            + "  dmx.sendmail.system_admin_mailbox: " + SYSTEM_ADMIN_MAILBOX + "\n"
+            + "  dmx.sendmail.type: " + SENDMAIL_TYPE);
 
         GREETING_ENABLED = Boolean.parseBoolean(System.getProperty("dmx.sendmail.greeting_enabled", "false"));
-        log.info("\n\tdmx.sendmail.greeting_enabled: " + GREETING_ENABLED);
+        log.info("\n  dmx.sendmail.greeting_enabled: " + GREETING_ENABLED);
         GREETING_SUBJECT = System.getProperty("dmx.sendmail.greeting_subject", DEFAULT_GREETING_SUBJECT);
-        log.info("\n\tdmx.sendmail.greeting_subject: " + (GREETING_SUBJECT.equals(DEFAULT_GREETING_SUBJECT) ? "<built-in subject>" : "<custom subject>"));
+        log.info("\n  dmx.sendmail.greeting_subject: " + (GREETING_SUBJECT.equals(DEFAULT_GREETING_SUBJECT) ?
+            "<built-in subject>" : "<custom subject>"));
         GREETING_MESSAGE = System.getProperty("dmx.sendmail.greeting_message", DEFAULT_GREETING_MESSAGE);
-        log.info("\n\tdmx.sendmail.greeting_message: " + (GREETING_MESSAGE.equals(DEFAULT_GREETING_MESSAGE) ? "<built-in message>" : "<custom message>"));
+        log.info("\n  dmx.sendmail.greeting_message: " + (GREETING_MESSAGE.equals(DEFAULT_GREETING_MESSAGE) ?
+            "<built-in message>" : "<custom message>"));
 
         String smtpHostName = System.getProperty("dmx.sendmail.smtp_host");
         SMTP_HOST = (smtpHostName == null) ? "localhost" : smtpHostName.trim();
@@ -95,12 +98,12 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         String smtpDebug = System.getProperty("dmx.sendmail.smtp_debug");
         SMTP_DEBUG = (smtpDebug == null) ? SMTP_DEBUG : Boolean.parseBoolean(smtpDebug);
         if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
-            log.info("\n\tdmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
-                + "\tdmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
-                + "\tdmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
-                + "\tdmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
-                + "\tdmx.sendmail.smtp_security: " + SMTP_SECURITY + "\n"
-                + "\tdmx.sendmail.smtp_debug: " + SMTP_DEBUG);
+            log.info("\n  dmx.sendmail.smtp_host: " + SMTP_HOST + "\n"
+                + "  dmx.sendmail.smtp_username: " + SMTP_USERNAME + "\n"
+                + "  dmx.sendmail.smtp_password: PASSWORD HIDDEN FOR LOG" + "\n"
+                + "  dmx.sendmail.smtp_port: " + SMTP_PORT + "\n"
+                + "  dmx.sendmail.smtp_security: " + SMTP_SECURITY + "\n"
+                + "  dmx.sendmail.smtp_debug: " + SMTP_DEBUG);
         } else if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
             SENDGRID_API_KEY = System.getProperty("dmx.sendmail.sendgrid_api_key");
             if (SENDGRID_API_KEY.isEmpty()) {
@@ -163,7 +166,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             // Send mail using the Sendgrid API
             if (SENDMAIL_TYPE.toLowerCase().equals("sendgrid")) {
                 SendgridWebApiV3 mailApi = new SendgridWebApiV3(SENDGRID_API_KEY);
-                SendgridMail mail = mailApi.newMailFromTo(sender, senderName, recipientMailbox, recipientName, subject, htmlMessage);
+                SendgridMail mail = mailApi.newMailFromTo(sender, senderName, recipientMailbox, recipientName, subject,
+                    htmlMessage);
                 mail.send();
             // Send mail using the SMTP Protocol
             } else if (SENDMAIL_TYPE.toLowerCase().equals("smtp")) {
@@ -208,6 +212,7 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
             email.setHtmlMsg(new String(htmlMessage.getBytes("UTF-8"), 0));
+            // https://stackoverflow.com/questions/56150300/encode-to-utf-8-encode-character-eg-%C3%B6-to-%C3%83
             email.setTextMsg(textMessage);
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
@@ -229,5 +234,4 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
             log.info("AfterSend: Set Classloader back " + Thread.currentThread().getContextClassLoader().toString());
         }
     }
-
 }
