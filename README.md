@@ -48,6 +48,7 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 
 ## Release Notes
+**2.1.1**, TBD
 
 **2.1.0**, Jul 14, 2023
 

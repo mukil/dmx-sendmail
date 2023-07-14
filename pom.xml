@@ -4,7 +4,7 @@
     <name>DMX Sendmail</name>
     <groupId>systems.dmx</groupId>
     <artifactId>dmx-sendmail</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <parent>
