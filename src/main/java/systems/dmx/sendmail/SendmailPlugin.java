@@ -189,7 +189,8 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
      * @param recipient     String of Email Addresses message is sent to.
      *                      Multiple recipients can be separated by ";". **Must not** be NULL.
      * @param subject       String Subject text for the message.
-     * @param htmlMessage       String Text content of the message.
+     * @param textMessage   plain text content of the message, or null.
+     * @param htmlMessage   HTML content of the message, or null.
      */
     private void sendSystemMail(String recipient, String subject, String textMessage, String htmlMessage) {
         // Hot Fix: Classloader issue we have in OSGi since using Pax web
@@ -217,15 +218,16 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         try {
             email.setFrom(SYSTEM_FROM_MAILBOX, SYSTEM_FROM_NAME);
             email.setSubject(subject);
-
             // If textMessage is not given, generate it from html message
-            // If htmlMessage is not given, use textMessage.
-            String targetTextMessage = textMessage == null ? JavaUtils.stripHTML(htmlMessage) : textMessage;
-            String targetHtmlMessage = htmlMessage == null ? textMessage : htmlMessage;
-
-            email.setHtmlMsg(new String(targetHtmlMessage.getBytes("UTF-8"), 0));
-            // https://stackoverflow.com/questions/56150300/encode-to-utf-8-encode-character-eg-%C3%B6-to-%C3%83
-            email.setTextMsg(targetTextMessage);
+            // If htmlMessage is not given, send plaintext message
+            if (textMessage == null) {
+                textMessage = JavaUtils.stripHTML(htmlMessage);     // TODO: use more sophisticated external library?
+            }
+            email.setTextMsg(textMessage);
+            if (htmlMessage != null) {
+                email.setHtmlMsg(new String(htmlMessage.getBytes("UTF-8"), 0));
+                // https://stackoverflow.com/questions/56150300/encode-to-utf-8-encode-character-eg-%C3%B6-to-%C3%83
+            }
             String recipientValue = recipient.trim();
             Collection<InternetAddress> recipients = new ArrayList<InternetAddress>();
             if (recipientValue.contains(";")) {

@@ -50,6 +50,8 @@ All third party components incorporated into the DMX Sendmail Software are licen
 ## Release Notes
 **2.1.1**, TBD
 
+- Send plain text mail
+
 **2.1.0**, Jul 14, 2023
 
 - API change: Plain text and HTML message body can be specified separately
