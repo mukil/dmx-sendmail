@@ -48,6 +48,8 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 
 ## Release Notes
+**2.1.2**, TBD
+
 **2.1.1**, Dec 1, 2023
 
 - Send plain text mail
