@@ -169,7 +169,7 @@ fi
 echo "You can now browse to https://${WEB_URL}/ for testing."
 
 ## run other tests
-for test in /deploy/tests*; do
+for test in deploy/tests*.sh; do
    source ${test}
 done
 
