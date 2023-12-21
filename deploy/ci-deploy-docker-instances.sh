@@ -167,7 +167,11 @@ if [ ${HTTP_CODE} -ne 200 ]; then
     exit 1
 fi
 ## run other tests
-TESTS="$( find deploy/tests/ -type f -name "*.sh" | grep -v *.bak | sort -n )"
+if [ -d deploy/tests ]; then
+    TESTS="$( find deploy/tests/ -type f -name "*.sh" | grep -v *.bak | sort -n )"
+else
+    TESTS=""
+fi
 for test in ${TESTS}; do
    echo "Running ${test}."
    source ${test}
