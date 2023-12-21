@@ -154,7 +154,7 @@ deploy/scripts/dmxstate.sh ./deploy/instance/${DOCKER_COMPOSE_PROFILE}/logs/dmx0
 
 ## TEST
 EXTERNAL_TEST_URL="https://${WEB_URL}/core/topic/0"
-echo -n "Testing ${EXTERNAL_TEST_URL} "
+echo -n "INFO: Testing ${EXTERNAL_TEST_URL} "
 count=0
 HTTP_CODE="$( curl -s -o /dev/null -w "%{http_code}" ${EXTERNAL_TEST_URL} )"
 while [ "${HTTP_CODE}" == "502" -a ${count} -lt 10 ]; do 
@@ -163,12 +163,13 @@ while [ "${HTTP_CODE}" == "502" -a ${count} -lt 10 ]; do
 done
 echo " => HTTP_CODE ${HTTP_CODE}"
 if [ ${HTTP_CODE} -ne 200 ]; then
-    echo "HTTP test for ${EXTERNAL_TEST_URL} failed with error code ${HTTP_CODE}."
+    echo "ERROR! HTTP test for ${EXTERNAL_TEST_URL} failed with error code ${HTTP_CODE}."
     exit 1
 fi
 ## run other tests
 TESTS="$( find deploy/tests/ -type f -name "*.sh" | grep -v *.bak | sort -n )"
 for test in ${TESTS}; do
+   echo "Running ${test}."
    source ${test}
 done
 echo "You can now browse to https://${WEB_URL}/ for testing."
