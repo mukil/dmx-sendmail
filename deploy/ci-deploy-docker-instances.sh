@@ -122,7 +122,7 @@ if [ -z "${DMX_PORT}" ]; then
 fi
 sleep 1
 LOGS_PORT="$( get_port.sh ${WEB_URL}-log )"
-if [ "$( echo "${PLUGINS[@]}" | grep dmx-sendmail )" ]; then
+if [ "$( echo "${PLUGINS[@]}" | grep dmx-sendmail )" ] || [ "$( echo "${target}" | grep dmx-sendmail )" ]; then
     MAIL_PORT="$( get_port.sh ${WEB_URL}-mail )"
     echo "MAIL_PORT=${MAIL_PORT}" >>"${ENV_FILE}"
 else
