@@ -92,11 +92,13 @@ else
     echo "INFO: mailhog not installed."
 fi
 
+## save docker environment vars to file
 echo "user_id=${USER_ID}" >>"${ENV_FILE}"
 echo "group_id=${GROUP_ID}" >>"${ENV_FILE}"
 echo "DMX_PORT=${DMX_PORT}" >>"${ENV_FILE}"
 echo "LOGS_PORT=${LOGS_PORT}" >>"${ENV_FILE}"
 echo "COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}" >>"${ENV_FILE}"
+echo "DEPLOY_PREFIX=${DEPLOY_PREFIX}" >>"${ENV_FILE}"
 cat "${ENV_FILE}"
 echo "DMX_ADMIN_PASSWORD=${DMX_ADMIN_PASSOWRD}" >>"${ENV_FILE}"
 echo "LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSOWRD}" >>"${ENV_FILE}"
