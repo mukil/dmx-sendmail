@@ -1,6 +1,8 @@
 #!/bin/bash
 
-SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" dmx/ \
+source deploy/ci-deploy-vars.sh
+
+SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" deploy/dmx/ \
     | grep -v $( basename $0 ) \
     | grep -v '<The subject for the greeting email>' \
     | awk -F':' '{ print $2 }' \
