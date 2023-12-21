@@ -168,6 +168,11 @@ if [ ${HTTP_CODE} -ne 200 ]; then
 fi
 echo "You can now browse to https://${WEB_URL}/ for testing."
 
+## run other tests
+for test in /deploy/tests*; do
+   source ${test}
+done
+
 ## EOF
 
 
