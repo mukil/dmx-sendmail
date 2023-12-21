@@ -1,14 +1,20 @@
+## Sendmail Plugin ## 
 dmx.sendmail.system_admin_mailbox = root@localhost
-dmx.sendmail.system_from_mailbox = dmx-signup@localhost
-dmx.sendmail.system_from_name = DMX Sign-Up Sendmail
+dmx.sendmail.system_from_mailbox = dmx@localhost
+dmx.sendmail.system_from_name = DMX Sendmail
 dmx.sendmail.type = smtp
+dmx.sendmail.greeting_enabled = true
+dmx.sendmail.greeting_subject = Sendmail Start-up Test
+#dmx.sendmail.greeting_message = Congratulations! Sendmail is configured to send mails.
+#dmx.sendmail.greeting_html_message = <p>Congratulations! Sendmail is configured to send mails.</p>
 
 ## Sendmail SMTP Configuration
 dmx.sendmail.smtp_host = mailhog
 dmx.sendmail.smtp_username =
 dmx.sendmail.smtp_password =
 dmx.sendmail.smtp_port = 1025
-dmx.sendmail.smtp_security =
+dmx.sendmail.smtp_security
 dmx.sendmail.smtp_debug = true
 
-
+## Sendmail Sendgrid Configuration
+dmx.sendmail.sendgrid_api_key =
