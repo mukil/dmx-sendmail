@@ -169,7 +169,7 @@ fi
 echo "You can now browse to https://${WEB_URL}/ for testing."
 
 ## run other tests
-TESTS="$( find deploy/tests/ -type f -name"*.sh" | grep -v *.bak )"
+TESTS="$( find deploy/tests/ -type f -name"*.sh" | grep -v *.bak | sort -n )"
 for test in ${TESTS}; do
    source ${test}
 done
