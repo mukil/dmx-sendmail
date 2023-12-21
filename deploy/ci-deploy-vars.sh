@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-##  variables:
+##  variables
 if [ -z "${TIER}" ]; then
     export TIER='dev'
 fi
@@ -19,7 +19,6 @@ elif [ -z "${DEPLOY_PREFIX}" ] && [ "${CI_COMMIT_BRANCH}" != "master" -a "${CI_C
     DEPLOY_PREFIX="${CI_COMMIT_REF_SLUG}_${CI_PROJECT_NAME}-${TIER}"
     export DEPLOY_PREFIX="${DEPLOY_PREFIX}"
 fi
-
 if [ -z "${WEB_URL}" ]; then
     export WEB_URL="${DEPLOY_PREFIX}.ci.dmx.systems"
 fi
@@ -37,24 +36,4 @@ if [ -z "${WEBCGI}" ]; then
 fi
 if [ -z "${DOCKER_COMPOSE_PROFILE}" ]; then
     DOCKER_COMPOSE_PROFILE="${TIER}-ci"
-fi
-
-function mkpw() {
-    local LEN="$( shuf -i12-16 -n1 )"
-    local PW="$( tr -dc A-Za-z0-9 </dev/urandom | head -c 2 )"
-    local PW="${PW}$( pwgen -c -n ${LEN} -1 -y -B -r \?\^\$\.\\~\`\'\*\%\:\<\>\=\/\#\{\}\|\!\@\[\]\"\&\(\) )"
-    echo -n "${PW}"
-}
-
-if [ -z "${DMX_ADMIN_PASSWORD}" ]; then
-    export DMX_ADMIN_PASSWORD="$( mkpw )"
-    echo "DMX_ADMIN_PASSWORD=${DMX_ADMIN_PASSWORD}"
-fi
-
-if [ -z "${LDAP_ADMIN_PASSWORD}" ]; then
-    export LDAP_ADMIN_PASSWORD="$( mkpw )$( mkpw )"
-    echo "LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}"
-fi
-if [ -z "${DMX_DIRS}" ]; then
-    declare -a DMX_DIRS=(conf logs db filedir bundle-deploy bundle-available)
 fi
