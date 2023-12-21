@@ -1,7 +1,8 @@
 #!/bin/bash
 
-SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" \
+SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" dmx/ \
     | grep -v $( basename $0 ) \
+    | grep -v '<The subject for the greeting email>' \
     | awk -F':' '{ print $2 }' \
     | cut -d'=' -f2  \
     | sed 's/^[ \t]*//g' \
