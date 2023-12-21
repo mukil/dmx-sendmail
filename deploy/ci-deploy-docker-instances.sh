@@ -26,7 +26,7 @@ elif [ -z "${DEPLOY_PREFIX}" ] && [ "${CI_COMMIT_BRANCH}" != "master" -a "${CI_C
 fi
 
 if [ -z "${WEB_URL}" ]; then
-    WEB_URL="${DEPLOY_PREFIX}.ci.dmx.systems"
+    export WEB_URL="${DEPLOY_PREFIX}.ci.dmx.systems"
 fi
 if [ -z "${CONFIG_DIR}" ]; then
     CONFIG_DIR='deploy/.config'
@@ -199,7 +199,7 @@ while [ "${HTTP_CODE}" == "502" -a ${count} -lt 10 ]; do
 done
 echo " => HTTP_CODE ${HTTP_CODE}"
 if [ ${HTTP_CODE} -ne 200 ]; then
-    echo "HTTP test for https://${WEB_URL}/ failed with error code ${HTTP_CODE}."
+    echo "HTTP test for ${EXTERNAL_TEST_URL} failed with error code ${HTTP_CODE}."
     exit 1
 fi
 echo "You can now browse to https://${WEB_URL}/ for testing."

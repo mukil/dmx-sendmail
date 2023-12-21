@@ -7,7 +7,7 @@ SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" dmx/ \
     | cut -d'=' -f2  \
     | sed 's/^[ \t]*//g' \
     )"
-RESULT="$( curl -sS https://dmx-sendmail-dev.ci.dmx.systems/mails/api/v2/messages \
+RESULT="$( curl -sS https://${WEB_URL}/mails/api/v2/messages \
     | jq .items[0].Content.Headers.Subject \
     | grep -vE "\[|\]" \
     | sed 's/\"//g' \
