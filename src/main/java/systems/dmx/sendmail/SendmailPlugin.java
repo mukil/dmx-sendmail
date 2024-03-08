@@ -64,6 +64,15 @@ public class SendmailPlugin extends PluginActivator implements SendmailService {
         } else {
             logger.severe("Configuration Error: DMX Sendmail has an invalid \"dmx.sendmail.type\" value set");
         }
+
+        // Test the service and our configuration
+        logger.info("Sending test mail per " + configuration.getSendmailType() + " on init to \"" + configuration.getSystemAdminEmailAddress() + "\"");
+        if (configuration.isGreetingEnabled()) {
+            doEmailSystemMailbox(
+                    configuration.getGreetingSubject(),
+                    configuration.getGreetingMessage(),
+                    configuration.getGreetingHtmlMessage());
+        }
     }
 
     @Override
