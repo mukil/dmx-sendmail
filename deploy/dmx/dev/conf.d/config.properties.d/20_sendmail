@@ -1,6 +1,6 @@
-dmx.sendmail.system_admin_mailbox = root@localhost
-dmx.sendmail.system_from_mailbox = dmx-signup@localhost
-dmx.sendmail.system_from_name = DMX Sign-Up Sendmail
+dmx.sendmail.system_admin_mailbox = admin@localhost
+dmx.sendmail.system_from_mailbox = system-from-@localhost
+dmx.sendmail.system_from_name = System From
 dmx.sendmail.type = smtp
 
 ## Sendmail SMTP Configuration

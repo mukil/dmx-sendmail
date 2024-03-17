@@ -26,7 +26,7 @@ class JavaMail {
      * @param textMessage plain text content of the message, or null.
      * @param htmlMessage HTML content of the message, or null.
      */
-    void sendSystemMail(String recipient, String subject, String textMessage, String htmlMessage) {
+    void send(String from, String fromName, String recipient, String recipientName, String subject, String textMessage, String htmlMessage) {
         // Hot Fix: Classloader issue we have in OSGi since using Pax web
         Thread.currentThread().setContextClassLoader(JavaMail.class.getClassLoader());
         log.info("BeforeSend: Set classloader to " + Thread.currentThread().getContextClassLoader().toString());
@@ -50,7 +50,7 @@ class JavaMail {
             email.setAuthentication(configuration.getSmtpUsername(), configuration.getSmtpPassword());
         }
         try {
-            email.setFrom(configuration.getSystemAdminEmailAddress(), configuration.getSystemFromName());
+            email.setFrom(from, fromName);
             email.setSubject(subject);
             // If textMessage is not given, generate it from html message
             // If htmlMessage is not given, send plaintext message
