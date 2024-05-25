@@ -2,8 +2,6 @@
 
 sleep 1
 
-source ci-deploy-vars.sh
-
 echo "INFO: Checking https://${WEB_URL}/mails/api/v2/message for new messages."
 SUBJECT="$( rgrep -F "dmx.sendmail.greeting_subject" deploy/dmx/ \
     | grep -v $( basename $0 ) \
