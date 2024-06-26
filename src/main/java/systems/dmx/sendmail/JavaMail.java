@@ -52,12 +52,10 @@ class JavaMail {
         try {
             email.setFrom(from, fromName);
             email.setSubject(subject);
-            // If textMessage is not given, generate it from html message
-            // If htmlMessage is not given, send plaintext message
-            if (textMessage == null) {
-                textMessage = JavaUtils.stripHTML(htmlMessage);     // TODO: use more sophisticated external library?
+            // send either plaintext or html or multipart message depending on given texts
+            if (textMessage != null) {
+                email.setTextMsg(textMessage);
             }
-            email.setTextMsg(textMessage);
             if (htmlMessage != null) {
                 email.setHtmlMsg(new String(htmlMessage.getBytes("UTF-8"), 0));
                 // https://stackoverflow.com/questions/56150300/encode-to-utf-8-encode-character-eg-%C3%B6-to-%C3%83
