@@ -32,6 +32,7 @@ class SendMailFromToUseCase {
                 mail.send();
                 // Send mail using the SMTP Protocol
             } else if (sendmailType.equals("smtp")) {
+                log.info("### recipient=" + recipientMailbox + ", subject=" + subject + ", textMessage=" + textMessage + ", htmlMessage=" + htmlMessage);
                 javaMail.send(sender, senderName, recipientMailbox, recipientName, subject, textMessage, htmlMessage);
             } else {
                 throw new IllegalStateException("Unknown sendmail type: " + sendmailType);
