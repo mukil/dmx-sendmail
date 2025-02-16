@@ -48,7 +48,14 @@ All third party components incorporated into the DMX Sendmail Software are licen
 
 
 ## Release Notes
-**2.1.2**, TBD
+
+**2.1.2**, Feb 16, 2025
+
+- Fixes:
+  - Send HTML-only mail
+  - Wrong usage of system admin account for sending mail
+- Added basic unit tests / Revised CI
+- Compatible with DMX 5.3.5
 
 **2.1.1**, Dec 1, 2023
 
@@ -86,4 +93,4 @@ All third party components incorporated into the DMX Sendmail Software are licen
 ## Authors
 
 Copyright (C) 2016-2018 Malte Reißig<br/>
-Copyright (C) 2019-2020 DMX Systems
+Copyright (C) 2019-2025 DMX Systems
